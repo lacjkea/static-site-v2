@@ -1,6 +1,6 @@
 //create navigation
 //<li><a href="#letter_a">A</a></li>
-const letters = "abcdefghijklmnopqrstuvwxyz";
+const letters = "abcdefghijklmnopqrstuvwxyz1234567890";
 
 const letterArray = letters.split("");
 
@@ -9,7 +9,6 @@ letterArray.forEach(handleLetter);
 
 function handleLetter(letter) {
   createNavLink(letter);
-
   //create section
   createBrandSection(letter);
 }
@@ -21,6 +20,7 @@ function createBrandSection(letter) {
   clone.querySelector("section").id = `letter_${letter}`;
   document.querySelector(".brandList").appendChild(clone);
 }
+
 function createNavLink(letter) {
   //create nav link
   const temp = document.querySelector("#linkTemplate").content;
@@ -39,14 +39,19 @@ function gotData(data) {
   data.forEach(showBrand);
 }
 function showBrand(brand) {
-  //console.log(brand.brandname);
+  console.log(brand.brandname);
   const template = document.querySelector("#linkTemplate").content;
   const copy = template.cloneNode(true);
   copy.querySelector("a").textContent = brand.brandname;
   copy.querySelector(
     "a"
   ).href = `productlist.html?brandname=${brand.brandname}`;
-  const firstLetter = brand.brandname[0].toLowerCase();
+  let firstLetter = brand.brandname[0];
+  if (isNaN(firstLetter)) {
+    firstLetter = brand.brandname[0].toLowerCase();
+    console.log(brand.brandname);
+    // debugger;
+  }
   const topParent = document.querySelector(`#letter_${firstLetter}`);
   const elemParent = topParent.querySelector("ol");
   elemParent.appendChild(copy);
